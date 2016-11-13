@@ -1,5 +1,7 @@
 import { List } from './list.component';
 
+import { Nav } from './nav.component';
+
 export class FilteredList extends React.Component {
 
     constructor(props) {
@@ -38,6 +40,7 @@ export class FilteredList extends React.Component {
     render() {
         return (
             <div className="filter-list">
+                <Nav/>
                 <input type="text" placeholder="Search" onChange={this.filterList}/>
                 <List items={this.state.items}/>
             </div>

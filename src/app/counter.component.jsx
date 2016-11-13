@@ -1,3 +1,5 @@
+import { Router, Route, Link, browserHistory } from 'react-router'
+
 export class MyComponent extends React.Component {
     constructor(props) {
         super(props);
