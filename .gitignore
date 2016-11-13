@@ -1,0 +1,9 @@
+# OS X meta file for folder options
+.DS_Store
+npm-debug.log
+
+# bower and npm packages
+bower_components
+node_modules
+comps
+dist
