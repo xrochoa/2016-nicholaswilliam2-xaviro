@@ -1,34 +1,38 @@
 {
-    "name": "nicholaswilliam2.0",
-    "version": "2.0.0",
-    "description": "An Ecommerce site for Nicholas William",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Xavier Reyes Ochoa <xareyesochoa@gmail.com> (http://www.xaviro.com)",
-    "license": "MIT",
-    "devDependencies": {
-        "babel-preset-es2015": "6.18.0",
-        "babel-preset-react": "6.16.0",
-        "browser-sync": "2.17.5",
-        "del": "2.2.2",
-        "gulp": "3.9.1",
-        "gulp-autoprefixer": "3.1.1",
-        "gulp-babel": "6.1.2",
-        "gulp-clean-css": "2.0.13",
-        "gulp-eslint": "3.0.1",
-        "gulp-htmlmin": "3.0.0",
-        "gulp-imagemin": "3.1.1",
-        "gulp-include": "2.3.1",
-        "gulp-sass": "2.3.2",
-        "gulp-sourcemaps": "2.2.0",
-        "gulp-uglify": "2.0.0",
-        "run-sequence": "1.2.2"
-    },
-    "eslintConfig": {
-        "env": {
-            "browser": true
-        }
+  "name": "nicholaswilliam2.0",
+  "version": "2.0.0",
+  "description": "An Ecommerce site for Nicholas William",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Xavier Reyes Ochoa <xareyesochoa@gmail.com> (http://www.xaviro.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "6.18.2",
+    "babel-preset-es2015": "6.18.0",
+    "babel-preset-react": "6.16.0",
+    "babelify": "7.3.0",
+    "browser-sync": "2.17.5",
+    "browserify": "13.1.1",
+    "del": "2.2.2",
+    "gulp": "3.9.1",
+    "gulp-autoprefixer": "3.1.1",
+    "gulp-clean-css": "2.0.13",
+    "gulp-eslint": "3.0.1",
+    "gulp-htmlmin": "3.0.0",
+    "gulp-imagemin": "3.1.1",
+    "gulp-include": "2.3.1",
+    "gulp-sass": "2.3.2",
+    "gulp-sourcemaps": "2.2.0",
+    "gulp-uglify": "2.0.0",
+    "run-sequence": "1.2.2",
+    "vinyl-buffer": "1.0.0",
+    "vinyl-source-stream": "1.1.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true
     }
+  }
 }

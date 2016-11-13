@@ -16,17 +16,19 @@ var sass = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     cleanCSS = require('gulp-clean-css');
 
-//js
-var eslint = require('gulp-eslint');
+//js and module bundler
+var eslint = require('gulp-eslint'),
     include = require('gulp-include'),
     uglify = require('gulp-uglify'),
-    babel = require('gulp-babel');
+    browserify = require('browserify'),
+    babelify = require('babelify'),
+    source = require('vinyl-source-stream'),
+    buffer = require('vinyl-buffer');
 
 //utils
 var del = require('del'),
     runSequence = require('run-sequence'),
     sourcemaps = require('gulp-sourcemaps');
-
 
 //server
 var browserSync = require('browser-sync').create();
@@ -72,7 +74,14 @@ gulp.task('img', function() {
 
 /*----------  JAVASCRIPT  ----------*/
 
-//Concat and minify custom js
+
+//Lint
+gulp.task('js:lint', function() {
+    return gulp.src('./src/app/**/*.jsx')
+        .pipe(eslint());
+});
+
+//Concat and minify lib
 gulp.task('js:lib', function() {
     return gulp.src('./src/assets/js/lib.js')
         .pipe(sourcemaps.init())
@@ -85,18 +94,17 @@ gulp.task('js:lib', function() {
 
 //Concat and minify custom js
 gulp.task('js:jsx', function() {
-    return gulp.src('./src/app/main.jsx')
-        .pipe(eslint())
-        .pipe(sourcemaps.init())
-        .pipe(babel({ presets: ['react', 'es2015'] }))
-        //.pipe(include())
-        .pipe(uglify())
-        .pipe(sourcemaps.write('.'))
+    return browserify({ entries: './src/app/main.jsx', extensions: ['.jsx'], debug: true }) //debug adds sourcemaps
+        .transform('babelify', { presets: ['es2015', 'react'] })
+        .bundle()
+        .pipe(source('main.js'))
+        .pipe(buffer())
+        //.pipe(uglify()) removes sourcemaps
         .pipe(gulp.dest('./dist/app'))
         .pipe(browserSync.stream());
 });
 
-gulp.task('js', ['js:lib', 'js:jsx']);
+gulp.task('js', ['js:lint', 'js:lib', 'js:jsx']);
 
 /*----------  CSS  ----------*/
 
@@ -149,7 +157,8 @@ gulp.task('watch', function() {
     gulp.watch('src/assets/img/**/*', ['img']);
     gulp.watch('src/**/*.html', ['html']);
     gulp.watch('src/assets/scss/**/*.scss', ['css']);
-    gulp.watch('src/assets/js/**/*.js', ['js']);
+    gulp.watch('src/app/**/*.jsx', ['js:jsx']);
+    gulp.watch('src/assets/js/**/*.js', ['js:lib']);
 
 });
 
