@@ -1,4 +1,4 @@
-import { Router, Route, Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 
 export class Nav extends React.Component {
 

@@ -1,4 +1,4 @@
-import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, Link, browserHistory, IndexRedirect } from 'react-router';
 
 //Core
 import { Nav } from './core/nav.component';
@@ -14,6 +14,7 @@ import { Signup } from './signup.component';
 import { Checkout } from './checkout.component';
 import { About } from './about.component';
 import { Contact } from './contact.component';
+import { ShirtModal } from './shirts/shirt-modal.component';
 
 class Layout extends React.Component {
 
@@ -44,7 +45,11 @@ ReactDOM.render((
         <Route path="checkout" component={Checkout} />
         <Route path="about" component={About} />
         <Route path="contact" component={Contact} />
-      </Route> 
+        <Route path="shirts/:name" component={ShirtModal} />
+      </Route>
+    </Route>
+    <Route path="*" component={Layout}>
+      <IndexRedirect to="/" /> 
     </Route>
   </Router>
 ), document.getElementById('my-app'))

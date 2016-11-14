@@ -16,7 +16,7 @@ export class Shirts extends React.Component {
                 let shirtsArray = [];
                 for (let key in shirts) {
                     let newShirt = shirts[key];
-                    newShirt['name'] = key;
+                    newShirt['code'] = key;
                     shirtsArray.push(newShirt);
                 }
                 this.setState({ shirts: shirtsArray });
@@ -31,7 +31,7 @@ export class Shirts extends React.Component {
             <div className="shirts">
               <header></header>
               { this.state.shirts.map((shirt, i)=>{
-                  return <Shirt key={ i } imgName={ shirt.name.toLowerCase().split(' ').join('_') }>{shirt.name}</Shirt>
+                  return <Shirt key={ i } shirtData={ shirt }>{shirt.name}</Shirt>
               }) }
               <div className="modal">
                 {this.props.children}
