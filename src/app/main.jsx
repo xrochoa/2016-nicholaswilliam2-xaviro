@@ -5,7 +5,7 @@ import { Nav } from './core/nav.component';
 import { Footer } from './core/footer.component';
 
 //Routes
-import { Shirts } from './shirts.component';
+import { Shirts } from './shirts/shirts.component';
 
 //Special case routes/modals
 import { Cart } from './cart.component';

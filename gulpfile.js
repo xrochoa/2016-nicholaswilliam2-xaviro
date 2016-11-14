@@ -28,7 +28,8 @@ var eslint = require('gulp-eslint'),
 //utils
 var del = require('del'),
     runSequence = require('run-sequence'),
-    sourcemaps = require('gulp-sourcemaps');
+    sourcemaps = require('gulp-sourcemaps'),
+    historyApiFallback = require('connect-history-api-fallback');
 
 //server
 var browserSync = require('browser-sync').create();
@@ -144,6 +145,7 @@ gulp.task('watch', function() {
         server: {
             baseDir: './dist'
         },
+        middleware: [historyApiFallback()],
         open: false,
         notify: {
             styles: {
