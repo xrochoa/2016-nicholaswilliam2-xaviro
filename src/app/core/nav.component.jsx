@@ -1,15 +1,24 @@
 import { Link } from 'react-router';
+import cartStore from '../stores/cart.store';
 
 export class Nav extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { username: '', error: '' };
-
+        this.state = { username: '', error: '', 'cartItems': 0 };
         this.signOut = this.signOut.bind(this);
     }
 
     componentWillMount() {
+        this.checkAuth();
+        this.getCartItems();
+        //add event listener (for state/view change)
+        cartStore.on('UPDATE_CART_ITEMS', () => {
+            this.getCartItems();
+        });
+    }
+
+    checkAuth() {
         //check if user is logged in
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
@@ -18,6 +27,14 @@ export class Nav extends React.Component {
             }
         });
     }
+
+    getCartItems() {
+        //get number of items from local storage
+        let cartItems = JSON.parse(localStorage.getItem('cartItems'));
+        if (cartItems !== null) { this.setState({ cartItems: cartItems }); }
+    }
+
+
 
     signOut() {
         firebase.auth().signOut()
@@ -29,7 +46,7 @@ export class Nav extends React.Component {
         return (
             <nav>
                 <Link to="/">Home</Link>
-                <Link to="/cart">Cart</Link>
+                <Link to="/cart">Cart { this.state.cartItems }</Link>
                 <Link to="/login">Login</Link>
                 <Link to="/signup">Signup</Link>
                 <Link to="/checkout">Checkout</Link>
@@ -44,3 +61,5 @@ export class Nav extends React.Component {
 }
 
 //still need shirts/:name
+//remember in ES6 { type } replaces { type: type }
+//remember in ES6 const { params } = this.props improves readability just using params instead of this.props.params

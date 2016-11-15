@@ -1,5 +1,7 @@
 import { Link } from 'react-router';
 
+import * as cartActions from '../actions/cart.actions';
+
 export class ShirtModal extends React.Component {
 
     constructor(props) {
@@ -8,7 +10,6 @@ export class ShirtModal extends React.Component {
     }
 
     componentWillMount() {
-    	console.log(this.props.params.name);
         if (this.props.params.name) {
             this.fetchData();
         }
@@ -27,15 +28,20 @@ export class ShirtModal extends React.Component {
             });
     }
 
+    addToCart() {
+        cartActions.addToCart(this.state.shirt);
+    }
+
     render() {
         return (
             <div>
-	            <h1>ShirtModal : {this.state.shirt.name}</h1>
-	            <img src={ this.state.shirt.url }/>
-	            <p>{ this.state.shirt.desc }</p>
-	           	<p>{ this.state.shirt.price }</p>
-	            <p>{ this.state.shirt.size }</p>
- 	          <Link to="/">Home</Link>
+                <h1>ShirtModal : {this.state.shirt.name}</h1>
+                <img src={ this.state.shirt.url }/>
+                <p>{ this.state.shirt.desc }</p>
+                <p>{ this.state.shirt.price }</p>
+                <p>{ this.state.shirt.size }</p>
+                <button onClick={ this.addToCart.bind(this) }>Add to cart</button>
+              <Link to="/">Home</Link>
             </div>
         );
     }

@@ -37,8 +37,8 @@ XXX use storage for image
 --> explain format to nick
 
 shirt component + cart component (tutorial)
-login + signup components + firebase
-stripe credit card component + thank you component
+XXXlogin + signup components + firebase
+stripe credit card component + thank you component + save token to firebase
 about component
 contact form component
 
