@@ -49,7 +49,6 @@ export class Nav extends React.Component {
                 <Link to="/cart">Cart { this.state.cartItems }</Link>
                 <Link to="/login">Login</Link>
                 <Link to="/signup">Signup</Link>
-                <Link to="/checkout">Checkout</Link>
                 <Link to="/about">About</Link>
                 <Link to="/contact">Contact</Link>
                 { this.state.username ? <button onClick={ this.signOut }>Sign Out</button> : null }

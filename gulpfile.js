@@ -147,6 +147,7 @@ gulp.task('watch', function() {
         },
         middleware: [historyApiFallback()],
         open: false,
+        port: 3001,
         notify: {
             styles: {
                 top: 'auto',

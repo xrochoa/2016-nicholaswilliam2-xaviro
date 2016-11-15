@@ -36,7 +36,7 @@ XXX use storage for image
 - change rules for read only
 --> explain format to nick
 
-shirt component + cart component (tutorial)
+XXXshirt component + cart component (tutorial)
 XXXlogin + signup components + firebase
 stripe credit card component + thank you component + save token to firebase
 about component
