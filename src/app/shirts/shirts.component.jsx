@@ -29,7 +29,6 @@ export class Shirts extends React.Component {
     render() {
         return (
             <div className="shirts">
-              <header></header>
               { this.state.shirts.map((shirt, i)=>{
                   return <Shirt key={ i } shirtData={ shirt }>{shirt.name}</Shirt>
               }) }

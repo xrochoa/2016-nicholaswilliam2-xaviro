@@ -22,11 +22,18 @@ export class Shirt extends React.Component {
     //     return this.props.shirtData.name.toLowerCase().split(' ').join('_');
     // }
 
+    randomHex() {
+        return { backgroundColor: '#' + Math.floor(Math.random() * 16777215).toString(16) };
+    }
+
     render() {
         return (
-            <div>
-              <h1>{this.props.children}</h1>
-              <Link to={ `/shirts/${ this.props.shirtData.code }`}><img src={this.props.shirtData.url}/></Link>
+            <div className="shirt-wrapper">
+                <h2>{this.props.children}</h2>
+                <Link to={ `/shirts/${ this.props.shirtData.code }`}>
+                    <img className="shirt" src="./assets/img/shirt.svg" style={ this.randomHex() }/>
+                    <img className="sketch" src={this.props.shirtData.url}/>
+                </Link>
             </div>
         );
     }

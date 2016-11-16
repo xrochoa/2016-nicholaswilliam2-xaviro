@@ -55,7 +55,3 @@ export class Nav extends React.Component {
         );
     }
 }
-
-//still need shirts/:name
-//remember in ES6 { type } replaces { type: type }
-//remember in ES6 const { params } = this.props improves readability just using params instead of this.props.params
