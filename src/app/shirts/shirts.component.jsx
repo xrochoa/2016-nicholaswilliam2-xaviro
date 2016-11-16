@@ -29,12 +29,10 @@ export class Shirts extends React.Component {
     render() {
         return (
             <div className="shirts">
-              { this.state.shirts.map((shirt, i)=>{
+                { this.state.shirts.map((shirt, i)=>{
                   return <Shirt key={ i } shirtData={ shirt }>{shirt.name}</Shirt>
-              }) }
-              <div className="modal">
+                }) }
                 {this.props.children}
-              </div>
             </div>
         );
     }

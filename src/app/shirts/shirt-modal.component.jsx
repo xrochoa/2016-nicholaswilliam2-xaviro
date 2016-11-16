@@ -6,13 +6,20 @@ export class ShirtModal extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { shirt: {} };
+        this.state = { shirt: {}, animate: '' };
     }
+
 
     componentWillMount() {
         if (this.props.params.name) {
             this.fetchData();
         }
+    }
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ animate: ' animate' });
+        }, 300)
     }
 
     fetchData() {
@@ -34,14 +41,27 @@ export class ShirtModal extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>ShirtModal : {this.state.shirt.name}</h1>
-                <img src={ this.state.shirt.url }/>
-                <p>{ this.state.shirt.desc }</p>
-                <p>{ this.state.shirt.price }</p>
-                <p>{ this.state.shirt.size }</p>
-                <button onClick={ this.addToCart.bind(this) }>Add to cart</button>
-              <Link to="/">Home</Link>
+            <div className="modal shirt-modal">
+                <Link to="/">
+                    <div className={ 'modal-overlay' + this.state.animate }></div>
+                </Link>
+                <div className={ 'modal-content' + this.state.animate }>
+                    <div className="flex">
+                        <div className="modal-shirt-wrapper">
+                            <img className="shirt" src="../assets/img/shirt.svg" />
+                            <img className="sketch" src={this.state.shirt.url}/>
+                        </div>
+                        <div className="modal-shirt-text-wrapper">
+                            <h2>{this.state.shirt.name}</h2>
+                            <p>{ this.state.shirt.desc }</p>
+                            <p>Price: ${ this.state.shirt.price }</p>
+                            <p>Size: { this.state.shirt.size }</p>
+                            <br/>
+                            <button onClick={ this.addToCart.bind(this) }>Add to cart</button>
+                            <Link to="/"><button>Back</button></Link>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
