@@ -5,12 +5,10 @@ export class Nav extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { username: '', error: '', 'cartItems': 0 };
-        this.signOut = this.signOut.bind(this);
+        this.state = { 'cartItems': 0, animate: '' };
     }
 
     componentWillMount() {
-        this.checkAuth();
         this.getCartItems();
         //add event listener (for state/view change)
         cartStore.on('UPDATE_CART_ITEMS', () => {
@@ -18,40 +16,41 @@ export class Nav extends React.Component {
         });
     }
 
-    checkAuth() {
-        //check if user is logged in
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                let username = user.displayName;
-                this.setState({ username: username });
-            }
-        });
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({ animate: ' animate' });
+        }, 300)
     }
 
     getCartItems() {
         //get number of items from local storage
         let cartItems = JSON.parse(localStorage.getItem('cartItems'));
-        if (cartItems !== null) { this.setState({ cartItems: cartItems }); }
-    }
-
-
-
-    signOut() {
-        firebase.auth().signOut()
-            .then(() => { this.setState({ username: '' }); })
-            .catch((err) => { this.setState({ error: err.message }); });
+        if (cartItems !== null) { this.setState({ cartItems }); }
     }
 
     render() {
         return (
-            <nav>
-                <Link to="/">Home</Link>
-                <Link to="/cart">Cart { this.state.cartItems }</Link>
-                <Link to="/about">About</Link>
-                <Link to="/contact">Contact</Link>
-                { this.state.username ? <button onClick={ this.signOut }>Sign Out</button> : null }
-                <p>{ this.state.username }</p>
-                <p>{ this.state.error }</p>
+            <nav id="site-nav" className="flex">
+                <img className={ 'img-logo' + this.state.animate } src="../assets/img/logo.svg" />
+                <div id="social-icons" className="flex">                
+                    <a href="https://www.facebook.com/nwconcept" target="_blank">
+                        <img className={ 'icon' + this.state.animate } src="./assets/img/icon-facebook.svg" />
+                        <p>Facebook</p>
+                    </a>
+                    <Link to="/about">
+                        <img className={ 'icon' + this.state.animate } src="./assets/img/icon-about.svg" />
+                        <p>About</p>
+                    </Link>
+                    <Link to="/contact">
+                        <img className={ 'icon' + this.state.animate } src="./assets/img/icon-contact.svg" />
+                        <p>Contact</p>
+                    </Link>
+                    <Link to="/cart">
+                        <img className={ 'icon' + this.state.animate } src="./assets/img/icon-cart.svg" />
+                        <p>Cart</p>
+                    </Link>
+                    <div className={ 'cart-items' + this.state.animate }>{ this.state.cartItems }</div>
+                </div>
             </nav>
         );
     }

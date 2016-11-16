@@ -1,0 +1,63 @@
+// ---------
+// COMMON PLACEHOLDERS
+// ---------
+%center-block {
+    display: block;
+    margin: 0 auto;
+}
+
+// ---------
+// COMPATIBLE GRID SYSTEM
+// ---------
+$pad: 0;
+%clearfix {
+    &:before,
+    &:after {
+        content: " "; // for Opera bug
+        display: table; // to use with :before
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+@mixin make-box() {
+    padding-left: floor(($pad / 2));
+    padding-right: ceil(($pad / 2));
+    @extend %center-block;
+    @extend %clearfix;
+}
+
+@mixin make-line() {
+    margin-left: ceil(($pad / -2));
+    margin-right: floor(($pad / -2));
+    @extend %clearfix;
+}
+
+@mixin make-cell() {
+    position: relative;
+    box-sizing: border-box;
+    min-height: 1px; // so it doesn't collapse when empty
+    padding-left: ceil(($pad / 2));
+    padding-right: floor(($pad / 2));
+    float: left;
+}
+
+.box {
+    @include make-box;
+}
+
+.line {
+    @include make-line;
+}
+
+.cell {
+    @include make-cell;
+}
+
+// ---------
+// FLEX GRID SYSTEM
+// ---------
+.flex {
+    display: flex;
+}
