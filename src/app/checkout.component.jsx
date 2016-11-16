@@ -1,5 +1,7 @@
 import StripeCheckout from 'react-stripe-checkout';
 
+import { browserHistory } from 'react-router';
+
 export class Checkout extends React.Component {
 
     onToken(token) {
@@ -9,7 +11,7 @@ export class Checkout extends React.Component {
             amount: this.props.total
         }
 
-        console.log(postData);
+        //console.log(postData);
 
         fetch('/savetoken', {
                 method: 'post',
@@ -20,7 +22,7 @@ export class Checkout extends React.Component {
             })
             .then(function(data) {
                 if (data.status === 200) {
-                    console.log('Request succeeded with JSON response', data.body);
+                    browserHistory.push('/thankyou');
                 } else {
                     console.log('There was an error with the payment, Nicholas William will contact you soon', data.body);
 

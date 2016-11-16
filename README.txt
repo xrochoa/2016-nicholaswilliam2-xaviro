@@ -35,12 +35,16 @@ XXX use storage for image
 - update inititalize data (locally)
 - change rules for read only
 --> explain format to nick
+XXXremember to register and change formspree to nicks email
+
 
 XXXshirt component + cart component (tutorial)
-XXXlogin + signup components + firebase
-stripe credit card component + thank you component + save token to firebase
-about component
-contact form component
+???login + signup components + firebase (!!!unnecessary)
+XXXstripe credit card component
+XXXthank you component 
+???save token to firebase (!!!unnecessary)
+XXXabout component
+XXXcontact form component (formspree)
 
 styles + animations
 responsive styles

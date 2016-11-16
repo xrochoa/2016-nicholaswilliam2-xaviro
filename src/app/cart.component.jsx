@@ -57,8 +57,11 @@ export class Cart extends React.Component {
             <button onClick={ () => this.addToCart(basket.shirt) }> + </button>
                   </div>
               )}) }
-              <div>TOTAL:  { total }</div>
-              <Checkout total={ total * 100 }/>
+              { (total === 0) ? <p>Your cart is empty</p> : 
+                <div>
+                  <div>TOTAL:  { total }</div>
+                  <Checkout total={ total * 100 }/>
+                </div> }
             </div>
         );
     }

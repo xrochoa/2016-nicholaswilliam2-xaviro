@@ -9,11 +9,10 @@ import { Shirts } from './shirts/shirts.component';
 
 //Special case routes/modals
 import { Cart } from './cart.component';
-import { Login } from './login.component';
-import { Signup } from './signup.component';
 import { About } from './about.component';
 import { Contact } from './contact.component';
 import { ShirtModal } from './shirts/shirt-modal.component';
+import { Thankyou } from './thankyou.component';
 
 class Layout extends React.Component {
 
@@ -39,10 +38,9 @@ ReactDOM.render((
       <IndexRoute component={Shirts} />
       <Route component={Shirts}>
         <Route path="cart" component={Cart} />
-        <Route path="login" component={Login} />
-        <Route path="signup" component={Signup} />
         <Route path="about" component={About} />
         <Route path="contact" component={Contact} />
+        <Route path="thankyou" component={Thankyou} />
         <Route path="shirts/:name" component={ShirtModal} />
       </Route>
     </Route>
