@@ -9,6 +9,7 @@
             width: 80%;
             left: 10%;
             position: relative;
+            transition: background .2s ease;
         }
         .sketch {
             position: absolute;
@@ -24,12 +25,13 @@
         left: 75%;
         top: 50%;
         transform: translate(-50%, -50%);
+        h2 {
+        	margin-top: 0;
+        }
         a {
             text-decoration: none;
         }
         button {
-            display: block;
-            margin-top: 20px;
             //style
             color: white;
             background: black;
@@ -47,6 +49,32 @@
             }
         }
     }
+    .cart-row {
+        margin: 20px 0;
+        display: flex;
+        align-items: center;
+    }
+    //reduced version of nav icon
+    .icon-cart {
+        width: 30px;
+        height: 30px;
+        margin: 0 10px;
+        &:hover {
+            .icon {
+                box-shadow: 0 0 0 3px black;
+            }
+        }
+        .icon {
+            //hover
+            background: #868A8E;
+            border-radius: 50% 50%;
+            transition: box-shadow .2s ease;
+        }
+    }
+}
+
+.size-boxes {
+    margin-top: 20px;
 }
 
 .size-box {
@@ -60,8 +88,38 @@
     box-shadow: 0 0 0 3px black;
     cursor: pointer;
     transition: color .2s ease, background .2s ease;
+    &:hover {
+        background: black;
+        color: white;
+    }
     &.selected {
         color: white;
         background: black;
+    }
+}
+
+.color-boxes {
+    margin-top: 20px;
+    max-width: (26*6) * 1px;
+}
+
+.color-box {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    margin-top: 10px;
+    text-align: center;
+    color: black;
+    background: white;
+    cursor: pointer;
+    &:hover {
+        position: relative;
+        transition: box-shadow .2s ease;
+        box-shadow: 0 0 0 3px black;
+    }
+    &.selected {
+        color: white;
+        background: black;
+        box-shadow: inset 0 0 0 3px black;
     }
 }

@@ -1,5 +1,7 @@
 import { Link } from 'react-router';
 
+import colors from '../utils/colors';
+
 export class Shirt extends React.Component {
 
     constructor(props) {
@@ -13,8 +15,9 @@ export class Shirt extends React.Component {
         }, 300)
     }
 
-    randomHex() {
-        return { backgroundColor: '#' + Math.floor(Math.random() * 16777215).toString(16) };
+    randomColorFromArray() {
+        let randomIndex = Math.floor(Math.random() * colors.length);
+        return { backgroundColor: colors[randomIndex] };
     }
 
     render() {
@@ -22,7 +25,7 @@ export class Shirt extends React.Component {
             <div className={ 'shirt-wrapper' + this.state.animate }>
                 <h2>{this.props.children}</h2>
                 <Link to={ `/shirts/${ this.props.shirtData.code }`}>
-                    <img className="shirt" src="./assets/img/shirt.svg" style={ this.randomHex() }/>
+                    <img className="shirt" src="./assets/img/shirt.svg" style={ this.randomColorFromArray() }/>
                     <img className="sketch" src={this.props.shirtData.url}/>
                 </Link>
             </div>

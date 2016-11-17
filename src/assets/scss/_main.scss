@@ -71,14 +71,6 @@
         }
     }
     .cart-items {
-        width: 30px;
-        height: 30px;
-        background-color: red;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
         //animation init
         transform-origin: 50% 50%;
         transform: scale(0);
@@ -88,6 +80,19 @@
             transform: scale(1);
         }
     }
+}
+
+//reused in shirt modal
+.cart-items {
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    user-select: none; //just because (found it ugly if user tried to click)
 }
 
 
@@ -138,6 +143,7 @@
         width: 80%;
         left: 10%;
         position: relative;
+        transition: background .2s ease;
     }
     .sketch {
         position: absolute;
