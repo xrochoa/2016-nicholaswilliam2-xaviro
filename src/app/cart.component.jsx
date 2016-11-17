@@ -1,4 +1,5 @@
 import { Checkout } from './checkout.component';
+import { Modal } from './core/modal';
 
 import cartStore from './stores/cart.store';
 
@@ -45,7 +46,7 @@ export class Cart extends React.Component {
         }).reduce((a, b) => a + b, 0)
 
         return (
-            <div className="cart">
+            <Modal contentClass="contact-modal">
               { this.state.cart.map((basket, i)=>{
                   return (
                     <div key={ i }>
@@ -54,15 +55,15 @@ export class Cart extends React.Component {
                       <p>Price: {basket.shirt.price}</p>
                       <p>Subtotal: {basket.shirt.price * basket.quantity}</p>
                       <button onClick={ () => this.removeFromCart(basket.shirt) }> - </button>
-            <button onClick={ () => this.addToCart(basket.shirt) }> + </button>
-                  </div>
+                      <button onClick={ () => this.addToCart(basket.shirt) }> + </button>
+                    </div>
               )}) }
               { (total === 0) ? <p>Your cart is empty</p> : 
-                <div>
-                  <div>TOTAL:  { total }</div>
-                  <Checkout total={ total * 100 }/>
-                </div> }
-            </div>
+              <div>
+                <div>TOTAL:  { total }</div>
+                <Checkout total={ total * 100 }/>
+              </div> }
+            </Modal>
         );
     }
 }

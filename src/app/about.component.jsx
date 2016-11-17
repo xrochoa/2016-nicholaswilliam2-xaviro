@@ -1,8 +1,12 @@
+import { Modal } from './core/modal';
+
 export class About extends React.Component {
 
     render() {
         return (
-            <h1>About</h1>
+			<Modal contentClass="about-modal">
+				<h1>About</h1>
+			</Modal>
         );
     }
 }

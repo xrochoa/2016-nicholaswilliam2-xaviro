@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { Modal } from '../core/modal';
 
 import * as cartActions from '../actions/cart.actions';
 import cartStore from '../stores/cart.store';
@@ -11,7 +12,7 @@ export class ShirtModal extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { shirt: {}, animate: '', sizes: ['S', 'M', 'L', 'XL'], cartItems: 0 };
+        this.state = { shirt: {}, sizes: ['S', 'M', 'L', 'XL'], cartItems: 0 };
 
         this.getCartItems = this.getCartItems.bind(this); //ensures function is the same for removeListener
     }
@@ -30,12 +31,6 @@ export class ShirtModal extends React.Component {
         if (this.props.params.name) {
             this.fetchData();
         }
-    }
-
-    componentDidMount() {
-        setTimeout(() => {
-            this.setState({ animate: ' animate' });
-        }, 300)
     }
 
     componentWillUnmount() {
@@ -76,34 +71,29 @@ export class ShirtModal extends React.Component {
 
     render() {
         return (
-            <div className="modal shirt-modal">
-                <Link to="/">
-                    <div className={ 'modal-overlay' + this.state.animate }></div>
-                </Link>
-                <div className={ 'modal-content' + this.state.animate }>
-                    <div className="flex">
-                        <div className="modal-shirt-wrapper">
-                            <img className="shirt" src="../assets/img/shirt.svg" style={{ backgroundColor: this.state.shirt.color }}/>
-                            <img className="sketch" src={this.state.shirt.url}/>
+            <Modal contentClass="shirt-modal">
+                <div className="flex">
+                    <div className="modal-shirt-wrapper">
+                        <img className="shirt" src="../assets/img/shirt.svg" style={{ backgroundColor: this.state.shirt.color }}/>
+                        <img className="sketch" src={this.state.shirt.url}/>
+                    </div>
+                    <div className="modal-shirt-text-wrapper">
+                        <h2>{this.state.shirt.name}</h2>
+                        <p>{ this.state.shirt.desc }</p>
+                        <SizePicker size={ this.state.shirt.size } selectSize={ this.selectSize.bind(this) }/>
+                        <ColorPicker color={ this.state.shirt.color } selectColor={ this.selectColor.bind(this) }/>
+                        <p>Price: ${ this.state.shirt.price }</p>
+                        <div className="cart-row">
+                            <button onClick={ this.addToCart.bind(this) }>Add to cart</button>
+                            <Link to="/cart" className="icon-cart">
+                                <img className={ 'icon' + this.state.animate } src="./assets/img/icon-cart.svg" />
+                            </Link>                            
+                            <span className="cart-items">{ this.state.cartItems }</span>
                         </div>
-                        <div className="modal-shirt-text-wrapper">
-                            <h2>{this.state.shirt.name}</h2>
-                            <p>{ this.state.shirt.desc }</p>
-                            <SizePicker size={ this.state.shirt.size } selectSize={ this.selectSize.bind(this) }/>
-                            <ColorPicker color={ this.state.shirt.color } selectColor={ this.selectColor.bind(this) }/>
-                            <p>Price: ${ this.state.shirt.price }</p>
-                            <div className="cart-row">
-                                <button onClick={ this.addToCart.bind(this) }>Add to cart</button>
-                                <Link to="/cart" className="icon-cart">
-                                    <img className={ 'icon' + this.state.animate } src="./assets/img/icon-cart.svg" />
-                                </Link>                            
-                                <span className="cart-items">{ this.state.cartItems }</span>
-                            </div>
-                            <Link to="/"><button>Back</button></Link>
-                        </div>
+                        <Link to="/"><button>Back</button></Link>
                     </div>
                 </div>
-            </div>
+            </Modal>
         );
     }
 }
