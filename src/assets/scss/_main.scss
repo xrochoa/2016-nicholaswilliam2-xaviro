@@ -194,3 +194,24 @@ body {
         opacity: 1;
     }
 }
+
+
+/* BLACK BUTTON */
+
+%black-button {
+    //style
+    color: white;
+    background: black;
+    border: none;
+    padding: 10px 20px;
+    //transition
+    transition: box-shadow .2s ease, color .2s ease, background .2s ease;
+    &:hover {
+        color: black;
+        background: white;
+        box-shadow: 0 0 0 3px black;
+    }
+    &:focus {
+        outline: none;
+    }
+}

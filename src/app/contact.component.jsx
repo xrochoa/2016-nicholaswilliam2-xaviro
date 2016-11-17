@@ -4,7 +4,8 @@ export class Contact extends React.Component {
 
     render() {
         return (
-			<Modal contentClass="contact-modal">
+            <Modal contentClass="contact-modal">
+				<h1>Contact</h1>
 				<form method="POST" action="http://formspree.io/XXXNICHOLASXXX.com">
 					<input type="email" name="email" placeholder="Your email" />
 					<textarea name="message" placeholder="Your message"></textarea>
