@@ -6,7 +6,7 @@ export class ShirtModal extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { shirt: {}, animate: '' };
+        this.state = { shirt: {}, animate: '', sizes: ['S', 'M', 'L', 'XL'] };
     }
 
 
@@ -22,17 +22,27 @@ export class ShirtModal extends React.Component {
         }, 300)
     }
 
+    selectSize(event) {
+        let shirt = this.state.shirt;
+            shirt.size = event.target.innerHTML;
+        this.setState({ shirt }); //did it this way since setStae cant chage properties recursively
+    }
+
     fetchData() {
         fetch(`https://nicholaswilliamapi.firebaseio.com/shirts/${ this.props.params.name }.json`)
             .then((response) => {
                 return response.json();
             })
             .then((shirt) => {
-                this.setState({ shirt: shirt });
+                this.setState({ shirt });
             })
             .catch(function(err) {
                 console.log('There was a problen accessing the shirt API: ' + err.message);
             });
+    }
+
+    checkSelected(size) {
+        return (size === this.state.shirt.size) ? ' selected' : '';
     }
 
     addToCart() {
@@ -55,7 +65,18 @@ export class ShirtModal extends React.Component {
                             <h2>{this.state.shirt.name}</h2>
                             <p>{ this.state.shirt.desc }</p>
                             <p>Price: ${ this.state.shirt.price }</p>
-                            <p>Size: { this.state.shirt.size }</p>
+                            <div className="size-boxes">
+                                <span>Size: </span>
+                                { this.state.sizes.map((size, i) => {
+                                    return <span 
+                                                key={ i } 
+                                                onClick={ (event) => this.selectSize(event) } 
+                                                className={ 'size-box' + this.checkSelected(size) }>{ size }
+                                            </span>
+                                    })
+                                }
+                            </div>
+                            <p>Color: { this.state.shirt.color }</p>
                             <br/>
                             <button onClick={ this.addToCart.bind(this) }>Add to cart</button>
                             <Link to="/"><button>Back</button></Link>
