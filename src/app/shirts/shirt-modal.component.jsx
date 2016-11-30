@@ -86,11 +86,11 @@ export class ShirtModal extends React.Component {
                         <div className="cart-row">
                             <button onClick={ this.addToCart.bind(this) }>Add to cart</button>
                             <Link to="/cart" className="icon-cart">
-                                <img className={ 'icon' + this.state.animate } src="./assets/img/icon-cart.svg" />
+                                <img className="icon" src="./assets/img/icon-cart.svg" />
                             </Link>                            
                             <span className="cart-items">{ this.state.cartItems }</span>
                         </div>
-                        <Link to="/"><button>Back</button></Link>
+                        <Link to="/"><button className="btn-back">Back</button></Link>
                     </div>
                 </div>
             </Modal>

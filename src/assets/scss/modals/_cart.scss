@@ -1,0 +1,73 @@
+.cart-modal {
+	.cart-empty {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		text-align: center;
+	}
+    table {
+        width: 80%;
+        margin: 30px auto;
+    }
+    thead,
+    tr {
+        text-align: center;
+    }
+    thead,
+    tbody {
+        border-bottom: solid 2px black;
+    }
+    thead tr td:first-child {
+        text-align: left;
+    }
+    tbody tr td:first-child {
+        text-align: left;
+        font-size: 0.5em;
+    }
+    tfoot tr td:first-child {
+        text-align: right;
+    }
+    .cart-shirt-wrapper {
+        display: flex;
+    }
+    .cart-shirt {
+        max-width: 50px;
+        padding: 10px;
+        position: relative;
+    }
+    .shirt {
+        width: 80%;
+        left: 10%;
+        position: relative;
+        transition: background .2s ease;
+    }
+    .sketch {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        z-index: 10;
+    }
+    tbody button {
+    	//reset
+    	border: none;
+    	//styles
+        width: 20px;
+        height: 20px;
+        margin: 0 10px 0;
+        color: black;
+        background: white;
+        box-shadow: 0 0 0 3px black;
+        cursor: pointer;
+        transition: color .2s ease, background .2s ease;
+        &:hover {
+            background: black;
+            color: white;
+        }
+        &:focus {
+        	outline: none;
+        }
+    }
+}

@@ -38,12 +38,12 @@ class CartStore extends EventEmitter {
     addToCart(shirt) {
 
         let shirtsInCart = this.cart.map((basket, i) => {
-            return basket.shirt.name;
+            return `${basket.name}-${basket.color}-${basket.size}`;
         });
 
-        let basketIndex = shirtsInCart.indexOf(shirt.name);
+        let basketIndex = shirtsInCart.indexOf(`${shirt.name}-${shirt.color}-${shirt.size}`);
 
-        //console.log(this.cart, shirt, shirtsInCart, basketIndex);
+        //console.log('before', this.cart, shirtsInCart, basketIndex);
 
         if (basketIndex === -1) {
             //new shirt
@@ -58,6 +58,9 @@ class CartStore extends EventEmitter {
 
         //save changes to local storage
         localStorage.setItem('cart', JSON.stringify(this.cart));
+
+        //console.log('after', this.cart, string, shirtsInCart, basketIndex);
+
     }
 
     removeFromCart(shirt) {

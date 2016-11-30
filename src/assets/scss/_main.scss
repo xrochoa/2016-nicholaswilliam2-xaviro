@@ -215,3 +215,7 @@ body {
         outline: none;
     }
 }
+
+.btn-back {
+    @extend %black-button;
+}

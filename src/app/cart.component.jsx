@@ -1,5 +1,6 @@
 import { Checkout } from './checkout.component';
 import { Modal } from './core/modal';
+import { Link } from 'react-router';
 
 import cartStore from './stores/cart.store';
 
@@ -46,23 +47,60 @@ export class Cart extends React.Component {
         }).reduce((a, b) => a + b, 0)
 
         return (
-            <Modal contentClass="contact-modal">
-              { this.state.cart.map((basket, i)=>{
-                  return (
-                    <div key={ i }>
-                      <p>{basket.shirt.name}</p>
-                      <p>Quantity: {basket.quantity}</p>
-                      <p>Price: {basket.shirt.price}</p>
-                      <p>Subtotal: {basket.shirt.price * basket.quantity}</p>
-                      <button onClick={ () => this.removeFromCart(basket.shirt) }> - </button>
-                      <button onClick={ () => this.addToCart(basket.shirt) }> + </button>
-                    </div>
-              )}) }
-              { (total === 0) ? <p>Your cart is empty</p> : 
-              <div>
-                <div>TOTAL:  { total }</div>
-                <Checkout total={ total * 100 }/>
-              </div> }
+            <Modal contentClass="cart-modal">
+              { (total === 0) ? 
+                <div className="cart-empty">
+                  <p>Your cart is empty</p>
+                  <Link to="/"><button className="btn-back">Back</button></Link>
+                </div> : 
+              <table>
+                <thead>
+                  <tr>
+                    <td><h3>Shirt</h3></td>
+                    <td><h3>Price</h3></td>
+                    <td><h3>Quantity</h3></td>
+                    <td><h3>Subtotal</h3></td>
+                    <td></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  { this.state.cart.map((basket, i)=>{
+                      return (
+                        <tr className="cart-item" key={ i }>
+                          <td>
+                            <div className="cart-shirt-wrapper">
+                              <div className="cart-shirt">
+                                  <img className="shirt" src="../assets/img/shirt.svg" style={{ backgroundColor: basket.shirt.color }}/>
+                                  <img className="sketch" src={basket.shirt.url}/>
+                              </div>
+                              <div>
+                                <h3>{basket.shirt.name}</h3>
+                                <p>Size: {basket.shirt.size}</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>{basket.shirt.price}</td>
+                          <td>{basket.quantity}</td>
+                          <td>{basket.shirt.price * basket.quantity}</td>
+                          <td>
+                            <button onClick={ () => this.removeFromCart(basket.shirt) }> - </button>
+                            <button onClick={ () => this.addToCart(basket.shirt) }> + </button>
+                          </td>
+                        </tr>
+                  )}) }
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colSpan="3"><h3>TOTAL:</h3></td>
+                      <td>{ total }</td>
+                      <td><Checkout total={ total * 100 }/></td>
+                    </tr>
+                    <tr>
+                      <td colSpan="4"></td>
+                      <td><Link to="/"><button className="btn-back">Back</button></Link></td>
+                    </tr>
+                  </tfoot>
+              </table> }
             </Modal>
         );
     }
