@@ -33,7 +33,7 @@ export class Checkout extends React.Component {
                 }
             })
             .catch(function(err) {
-                console.log('Request failed', err);
+                browserHistory.push('/error');
             });
 
     }
@@ -46,16 +46,18 @@ export class Checkout extends React.Component {
                 description="Shirts for the bungalow people!"
                 image="../assets/img/logo.png"
                 currency="USD"
-                LOCALE="AUTO"
-                zipCode={true}
+                LOCALE="auto"
                 //important
                 amount={ this.props.total }                 
                 token={ this.onToken.bind(this) }
                 stripeKey="pk_test_Ec7h9oH3JDBHgxsGF8GaXJL7"
+                //shipping info
+                shippingAddress
+                billingAddress={true}
+                zipCode={true}
             />
         )
     }
 }
 
-//            shippingAddress
-// billingAddress={false}
+

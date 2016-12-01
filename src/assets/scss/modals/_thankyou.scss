@@ -1,0 +1,12 @@
+.thankyou-modal {
+    text-align: center;
+    background-color: $blue;
+    color: black;
+    .thankyou-wrapper {
+        width: 75%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
