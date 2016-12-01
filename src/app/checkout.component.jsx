@@ -1,5 +1,8 @@
 import StripeCheckout from 'react-stripe-checkout';
 
+import cartStore from './stores/cart.store';
+import * as cartActions from './actions/cart.actions';
+
 import { browserHistory } from 'react-router';
 
 export class Checkout extends React.Component {
@@ -8,6 +11,7 @@ export class Checkout extends React.Component {
 
         let postData = {
             token,
+            details: cartStore.cart,
             amount: this.props.total
         }
 
@@ -22,10 +26,10 @@ export class Checkout extends React.Component {
             })
             .then(function(data) {
                 if (data.status === 200) {
+                    cartActions.resetCart();
                     browserHistory.push('/thankyou');
                 } else {
-                    console.log('There was an error with the payment, Nicholas William will contact you soon', data.body);
-
+                    browserHistory.push('/error');
                 }
             })
             .catch(function(err) {

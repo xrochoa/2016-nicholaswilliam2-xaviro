@@ -12,6 +12,7 @@ import { Cart } from './cart.component';
 import { About } from './about.component';
 import { Contact } from './contact.component';
 import { ShirtModal } from './shirts/shirt-modal.component';
+import { ErrorModal } from './error.component';
 import { Thankyou } from './thankyou.component';
 
 class Layout extends React.Component {
@@ -40,6 +41,7 @@ ReactDOM.render((
         <Route path="cart" component={Cart} />
         <Route path="about" component={About} />
         <Route path="contact" component={Contact} />
+        <Route path="error" component={ErrorModal} />
         <Route path="thankyou" component={Thankyou} />
         <Route path="shirts/:name" component={ShirtModal} />
       </Route>

@@ -13,3 +13,9 @@ export function removeFromCart(shirt) { //emited from actions -> dispatcher -> s
         shirt
     });
 }
+
+export function resetCart() { 
+    dispatcher.dispatch({
+        type: 'RESET_CART'
+    });
+}

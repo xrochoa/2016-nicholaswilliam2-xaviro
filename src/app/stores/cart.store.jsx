@@ -90,6 +90,12 @@ class CartStore extends EventEmitter {
 
     }
 
+    resetCart() {
+        this.cart = [];
+        localStorage.removeItem('cart');
+        localStorage.setItem('cartItems', 0);
+    }
+
     //handles the flux actions i want
     handleActions(action) {
         //console.log(action);
@@ -105,6 +111,12 @@ class CartStore extends EventEmitter {
                 {
                     this.removeFromCart(action.shirt);
                     this.decreaseCartItems();
+                    this.emit('UPDATE_CART_ITEMS'); //listened by view/component
+                    break;
+                }
+            case 'RESET_CART': //listened by store from dispatcher
+                {
+                    this.resetCart();
                     this.emit('UPDATE_CART_ITEMS'); //listened by view/component
                     break;
                 }

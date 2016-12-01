@@ -22,14 +22,23 @@ app.post('/savetoken', function(req, res) {
 
     var token = req.body.token.id;
     var amount = req.body.amount;
+    var details = req.body.details;
 
-    //console.log(req.body, token, amount);
+    var metadata = {};
+
+    for (var i = 0; i < details.length; i++) {
+        metadata[`ITEM ${i + 1} Details`] = `*** Name: ${details[i].shirt.name} *** Size: ${details[i].shirt.size} *** Color: ${details[i].shirt.color}`;
+        metadata[`ITEM ${i + 1} Price`] = `*** Quantity: ${details[i].quantity} *** Subtotal: $${details[i].quantity * details[i].shirt.price}`;
+    }
+
+    console.log(req.body, token, amount, details, metadata);
 
     var charge = stripe.charges.create({
         amount: amount, // Amount in cents
-        currency: "usd",
+        currency: 'usd',
         source: token,
-        description: "Example charge"
+        description: 'Nicholas William Shirts Purchase',
+        metadata: metadata
     }, function(err, charge) {
         if (err) {
             res.status(400).send(err);

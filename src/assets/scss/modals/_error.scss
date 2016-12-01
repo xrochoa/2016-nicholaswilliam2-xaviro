@@ -1,0 +1,15 @@
+.error-modal {
+    text-align: center;
+    background-color: $red;
+    color: white;
+    .error-wrapper {
+        width: 75%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .btn-back {
+        margin: 0 10px;
+    }
+}
