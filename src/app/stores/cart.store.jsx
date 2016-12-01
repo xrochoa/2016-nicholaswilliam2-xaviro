@@ -38,38 +38,44 @@ class CartStore extends EventEmitter {
     addToCart(shirt) {
 
         let shirtsInCart = this.cart.map((basket, i) => {
-            return `${basket.name}-${basket.color}-${basket.size}`;
+            return `NAME: ${basket.shirt.name} - COLOR: ${basket.shirt.color} - SIZE: ${basket.shirt.size}`;
         });
 
-        let basketIndex = shirtsInCart.indexOf(`${shirt.name}-${shirt.color}-${shirt.size}`);
+        let shirtString = `NAME: ${shirt.name} - COLOR: ${shirt.color} - SIZE: ${shirt.size}`;
 
-        //console.log('before', this.cart, shirtsInCart, basketIndex);
+        let basketIndex = shirtsInCart.indexOf(shirtString);
+
+        //console.log('cartstring:', shirtsInCart, ' - newshirtstring:', shirtString, ' - index:', basketIndex);
 
         if (basketIndex === -1) {
             //new shirt
-            this.cart.push({
+            this.cart.push(JSON.parse(JSON.stringify({
                 quantity: 1,
                 shirt: shirt
-            });
+            })));
+            //console.log('newshirt', this.cart);
+
         } else {
             //increase quantity
             this.cart[basketIndex].quantity++;
+            //console.log('oldshirt', this.cart);
+
         }
 
         //save changes to local storage
         localStorage.setItem('cart', JSON.stringify(this.cart));
-
-        //console.log('after', this.cart, string, shirtsInCart, basketIndex);
 
     }
 
     removeFromCart(shirt) {
 
         let shirtsInCart = this.cart.map((basket, i) => {
-            return basket.shirt.name;
+            return `NAME: ${basket.shirt.name} - COLOR: ${basket.shirt.color} - SIZE: ${basket.shirt.size}`;
         });
 
-        let basketIndex = shirtsInCart.indexOf(shirt.name);
+        let shirtString = `NAME: ${shirt.name} - COLOR: ${shirt.color} - SIZE: ${shirt.size}`;
+
+        let basketIndex = shirtsInCart.indexOf(shirtString);
 
         //decreases quantity
         this.cart[basketIndex].quantity--;
