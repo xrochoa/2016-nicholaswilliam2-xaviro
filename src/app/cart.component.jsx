@@ -79,9 +79,9 @@ export class Cart extends React.Component {
                               </div>
                             </div>
                           </td>
-                          <td>{basket.shirt.price}</td>
+                          <td>${basket.shirt.price}</td>
                           <td>{basket.quantity}</td>
-                          <td>{basket.shirt.price * basket.quantity}</td>
+                          <td>${basket.shirt.price * basket.quantity}</td>
                           <td>
                             <button onClick={ () => this.removeFromCart(basket.shirt) }> - </button>
                             <button onClick={ () => this.addToCart(basket.shirt) }> + </button>
@@ -92,7 +92,7 @@ export class Cart extends React.Component {
                   <tfoot>
                     <tr>
                       <td colSpan="3"><h3>TOTAL:</h3></td>
-                      <td>{ total }</td>
+                      <td>${ total }</td>
                       <td><Checkout total={ total * 100 }/></td>
                     </tr>
                     <tr>
