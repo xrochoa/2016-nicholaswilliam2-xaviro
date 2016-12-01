@@ -40,7 +40,7 @@ export class Checkout extends React.Component {
             <StripeCheckout
                 name="Nicholas William"
                 description="Shirts for the bungalow people!"
-                image="https://www.vidhub.co/assets/logos/vidhub-icon-2e5c629f64ced5598a56387d4e3d0c7c.png"
+                image="../assets/img/logo.png"
                 currency="USD"
                 LOCALE="AUTO"
                 zipCode={true}
