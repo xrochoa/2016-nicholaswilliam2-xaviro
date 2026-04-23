@@ -6,7 +6,9 @@
 [build.environment]
   NODE_VERSION = "20"
   NPM_FLAGS = "--legacy-peer-deps"
-  NODE_ENV = "production"
+  # Force devDependencies to be installed (gulp, babel, etc. live there).
+  # Do NOT set NODE_ENV=production here: npm would skip devDependencies.
+  NPM_CONFIG_PRODUCTION = "false"
 
 # Preserve the original /savetoken endpoint name by rewriting it to the
 # equivalent Netlify Function. This keeps the client-side code identical
