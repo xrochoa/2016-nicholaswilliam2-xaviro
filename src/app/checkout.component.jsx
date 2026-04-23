@@ -41,11 +41,18 @@ export class Checkout extends React.Component {
 
 
     render() {
+        // Stripe Checkout loads the image from inside its own iframe on
+        // checkout.stripe.com, so a relative path would 404. Build an
+        // absolute URL from the current origin at render time.
+        const logoUrl = (typeof window !== 'undefined')
+            ? window.location.origin + '/assets/img/logo.png'
+            : undefined;
+
         return (
             <StripeCheckout
                 name="Nicholas William"
                 description="Shirts for the bungalow people!"
-                image="../assets/img/logo.png"
+                image={ logoUrl }
                 currency="USD"
                 LOCALE="auto"
                 //important

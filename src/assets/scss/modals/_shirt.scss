@@ -40,6 +40,13 @@
         display: flex;
         align-items: center;
     }
+    .cart-hint {
+        margin-top: -10px;
+        margin-bottom: 20px;
+        font-size: 0.85em;
+        color: #888;
+        font-style: italic;
+    }
     //reduced version of nav icon
     .icon-cart {
         width: 30px;

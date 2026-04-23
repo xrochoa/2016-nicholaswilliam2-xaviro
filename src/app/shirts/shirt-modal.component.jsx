@@ -83,12 +83,22 @@ export class ShirtModal extends React.Component {
                         <ColorPicker color={ this.state.shirt.color } selectColor={ this.selectColor.bind(this) }/>
                         <p>Price: ${ this.state.shirt.price }</p>
                         <div className="cart-row">
-                            <button onClick={ this.addToCart.bind(this) }>Add to cart</button>
+                            <button
+                                onClick={ this.addToCart.bind(this) }
+                                disabled={ !this.state.shirt.size || !this.state.shirt.color }
+                            >Add to cart</button>
                             <Link to="/cart" className="icon-cart">
                                 <img className="icon" src="./assets/img/icon-cart.svg" />
                             </Link>                            
                             <span className="cart-items">{ this.state.cartItems }</span>
                         </div>
+                        { (!this.state.shirt.size || !this.state.shirt.color) && this.state.shirt.name ? (
+                            <p className="cart-hint">
+                                Please pick a { !this.state.shirt.size ? 'size' : '' }
+                                { (!this.state.shirt.size && !this.state.shirt.color) ? ' and ' : '' }
+                                { !this.state.shirt.color ? 'color' : '' } to continue.
+                            </p>
+                        ) : null }
                         <Link to="/"><button className="btn-back">Back</button></Link>
                     </div>
                 </div>

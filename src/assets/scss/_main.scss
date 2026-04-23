@@ -214,6 +214,18 @@ body {
     &:focus {
         outline: none;
     }
+    &[disabled],
+    &:disabled {
+        background: #ccc;
+        color: #666;
+        cursor: not-allowed;
+        box-shadow: none;
+        &:hover {
+            background: #ccc;
+            color: #666;
+            box-shadow: none;
+        }
+    }
 }
 
 .btn-back {
