@@ -53,15 +53,14 @@ export class ShirtModal extends React.Component {
     }
 
     fetchData() {
-        fetch(`https://nicholaswilliamapi.firebaseio.com/shirts/${ this.props.params.name }.json`)
-            .then((response) => {
-                return response.json();
+        fetch('./assets/res/shirts.json')
+            .then((response) => response.json())
+            .then((shirts) => {
+                const shirt = shirts[this.props.params.name];
+                if (shirt) this.setState({ shirt });
             })
-            .then((shirt) => {
-                this.setState({ shirt });
-            })
-            .catch(function(err) {
-                console.log('There was a problen accessing the shirt API: ' + err.message);
+            .catch((err) => {
+                console.log('There was a problem loading the shirt: ' + err.message);
             });
     }
 

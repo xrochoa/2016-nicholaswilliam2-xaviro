@@ -17,14 +17,15 @@ export class Checkout extends React.Component {
 
         //console.log(postData);
 
+        // In production, /savetoken is redirected to a Netlify Function
+        // (see netlify.toml). In local development a mock middleware in the
+        // Gulp server (gulpfile.js) answers the same path with a demo success.
         fetch('/savetoken', {
                 method: 'post',
-                headers: {
-                    "Content-type": "application/json"
-                },
+                headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify(postData)
             })
-            .then(function(data) {
+            .then((data) => {
                 if (data.status === 200) {
                     cartActions.resetCart();
                     browserHistory.push('/thankyou');
@@ -32,7 +33,7 @@ export class Checkout extends React.Component {
                     browserHistory.push('/error');
                 }
             })
-            .catch(function(err) {
+            .catch(() => {
                 browserHistory.push('/error');
             });
 

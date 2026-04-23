@@ -1,9 +1,15 @@
 # OS X meta file for folder options
 .DS_Store
 npm-debug.log
+.DS_Store?
 
-# bower and npm packages
-bower_components
+# npm / build
 node_modules
-comps
 dist
+
+# Netlify
+.netlify
+
+# env
+.env
+.env.local

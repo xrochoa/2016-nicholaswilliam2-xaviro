@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M40 120 L100 80 L160 120"/>
+  <path d="M55 120 V165 H145 V120"/>
+  <path d="M90 165 V135 H110 V165"/>
+  <path d="M65 135 H80 V150 H65 Z"/>
+  <path d="M120 135 H135 V150 H120 Z"/>
+  <path d="M30 170 Q50 165 70 170 T110 170 T150 170 T180 170" stroke-width="2"/>
+  <circle cx="150" cy="55" r="10"/>
+</svg>

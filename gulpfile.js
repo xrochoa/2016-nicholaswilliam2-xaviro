@@ -1,173 +1,133 @@
-//gulp gulp-imagemin gulp-htmlmin gulp-sass gulp-autoprefixer gulp-clean-css gulp-jshint gulp-include gulp-uglify del run-sequence gulp-sourcemaps browser-sync gulp-babel jshint
-/*----------  GULP  ----------*/
+/*----------  GULP 4 BUILD PIPELINE  ----------*/
 
-var gulp = require('gulp');
+const gulp = require('gulp');
+const sourcemaps = require('gulp-sourcemaps');
 
-/*----------  PLUGINS  ----------*/
+// HTML
+const htmlmin = require('gulp-htmlmin');
 
-//img
-var imagemin = require('gulp-imagemin');
+// CSS
+const sass = require('gulp-sass')(require('sass'));
+const autoprefixer = require('gulp-autoprefixer');
+const cleanCSS = require('gulp-clean-css');
 
-//html
-var htmlmin = require('gulp-htmlmin');
+// JS
+const browserify = require('browserify');
+const babelify = require('babelify');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const uglify = require('gulp-uglify');
 
-//css
-var sass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cleanCSS = require('gulp-clean-css');
+// Utils
+const del = require('del');
+const historyApiFallback = require('connect-history-api-fallback');
+const browserSync = require('browser-sync').create();
 
-//js and module bundler
-var eslint = require('gulp-eslint'),
-    include = require('gulp-include'),
-    uglify = require('gulp-uglify'),
-    browserify = require('browserify'),
-    babelify = require('babelify'),
-    source = require('vinyl-source-stream'),
-    buffer = require('vinyl-buffer');
-
-//utils
-var del = require('del'),
-    runSequence = require('run-sequence'),
-    sourcemaps = require('gulp-sourcemaps'),
-    historyApiFallback = require('connect-history-api-fallback');
-
-//server
-var browserSync = require('browser-sync').create();
+const IS_PROD = process.env.NODE_ENV === 'production';
 
 /*----------  CLEAN  ----------*/
 
-//Clean dist folder before tasks
-gulp.task('clean', function() {
-    return del(['./dist/*']);
-});
+function clean() {
+    return del(['./dist/**', '!./dist']);
+}
 
-/*----------  RESOURCES  ----------*/
+/*----------  STATIC RESOURCES  ----------*/
 
-//Copy files from resources
-gulp.task('res', function() {
-    return gulp.src('./src/assets/res/**/*')
+function res() {
+    return gulp.src('./src/assets/res/**/*', { allowEmpty: true, encoding: false })
         .pipe(gulp.dest('./dist/assets/res'))
         .pipe(browserSync.stream());
+}
 
-});
+function img() {
+    return gulp.src('./src/assets/img/**/*', { encoding: false })
+        .pipe(gulp.dest('./dist/assets/img'))
+        .pipe(browserSync.stream());
+}
 
 /*----------  HTML  ----------*/
 
-//Minify html
-gulp.task('html', function() {
+function html() {
     return gulp.src('./src/**/*.html')
         .pipe(htmlmin({ collapseWhitespace: true }))
         .pipe(gulp.dest('./dist'))
         .pipe(browserSync.stream());
-
-});
-
-/*----------  IMAGES  ----------*/
-
-//Minify png, jpg, gif and svg images
-gulp.task('img', function() {
-    return gulp.src('./src/assets/img/**/*')
-        .pipe(imagemin())
-        .pipe(gulp.dest('./dist/assets/img'))
-        .pipe(browserSync.stream());
-
-});
-
-/*----------  JAVASCRIPT  ----------*/
-
-
-//Lint
-gulp.task('js:lint', function() {
-    return gulp.src('./src/app/**/*.jsx')
-        .pipe(eslint());
-});
-
-//Concat and minify lib
-gulp.task('js:lib', function() {
-    return gulp.src('./src/assets/js/lib.js')
-        .pipe(sourcemaps.init())
-        .pipe(include())
-        //.pipe(uglify())
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('./dist/assets/js'))
-        .pipe(browserSync.stream());
-});
-
-//Concat and minify custom js
-gulp.task('js:jsx', function() {
-    return browserify({ entries: './src/app/main.jsx', extensions: ['.jsx'], debug: true }) //debug adds sourcemaps
-        .transform('babelify', { presets: ['es2015', 'react'] })
-        .bundle()
-        .pipe(source('main.js'))
-        .pipe(buffer())
-        //.pipe(uglify()) removes sourcemaps
-        .pipe(gulp.dest('./dist/app'))
-        .pipe(browserSync.stream());
-});
-
-gulp.task('js', ['js:lint', 'js:lib', 'js:jsx']);
+}
 
 /*----------  CSS  ----------*/
 
-//Compile scss to css and minify
-gulp.task('css', function() {
-    return gulp.src('./src/assets/scss/**/style.scss')
+function css() {
+    return gulp.src('./src/assets/scss/style.scss')
         .pipe(sourcemaps.init())
-        .pipe(sass().on('error', sass.logError))
-        .pipe(autoprefixer({
-            browsers: [
-                "Android 2.3",
-                "Android >= 4",
-                "Chrome >= 20",
-                "Firefox >= 24",
-                "Explorer >= 8",
-                "iOS >= 6",
-                "Opera >= 12",
-                "Safari >= 6"
-            ],
-            cascade: false
-        }))
-        .pipe(cleanCSS({ compatibility: 'ie8' }))
+        .pipe(sass({ quietDeps: true, silenceDeprecations: ['legacy-js-api', 'slash-div', 'import'] }).on('error', sass.logError))
+        .pipe(autoprefixer({ cascade: false }))
+        .pipe(cleanCSS({ compatibility: 'ie9' }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./dist/assets/css'))
         .pipe(browserSync.stream());
+}
 
-});
+/*----------  JAVASCRIPT  ----------*/
 
+function js() {
+    const bundler = browserify({
+        entries: './src/app/main.jsx',
+        extensions: ['.jsx', '.js'],
+        debug: !IS_PROD
+    }).transform(babelify, { presets: ['@babel/preset-env', '@babel/preset-react'], extensions: ['.jsx', '.js'] });
 
-/*----------  WATCH  ----------*/
+    let stream = bundler.bundle()
+        .on('error', function (err) { console.error(err.toString()); this.emit('end'); })
+        .pipe(source('main.js'))
+        .pipe(buffer());
 
+    if (IS_PROD) stream = stream.pipe(uglify());
 
-//Watches Files For Changes
-gulp.task('watch', function() {
+    return stream
+        .pipe(gulp.dest('./dist/app'))
+        .pipe(browserSync.stream());
+}
 
+/*----------  SERVER + WATCH  ----------*/
+
+function serve() {
     browserSync.init({
-        server: {
-            baseDir: './dist'
-        },
-        middleware: [historyApiFallback()],
+        server: { baseDir: './dist' },
+        middleware: [
+            historyApiFallback(),
+            // Local mock of the Netlify function that handles Stripe token on deploy
+            function mockSaveToken(req, res, next) {
+                if (req.method === 'POST' && req.url === '/savetoken') {
+                    let body = '';
+                    req.on('data', (chunk) => { body += chunk; });
+                    req.on('end', () => {
+                        try { JSON.parse(body || '{}'); } catch (e) { /* ignore */ }
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.end(JSON.stringify({ success: true, demo: true }));
+                    });
+                    return;
+                }
+                next();
+            }
+        ],
         open: false,
         port: 3001,
-        notify: {
-            styles: {
-                top: 'auto',
-                bottom: '0'
-            }
-        }
+        notify: false
     });
 
-    gulp.watch('src/assets/res/**/*', ['res']);
-    gulp.watch('src/assets/img/**/*', ['img']);
-    gulp.watch('src/**/*.html', ['html']);
-    gulp.watch('src/assets/scss/**/*.scss', ['css']);
-    gulp.watch('src/app/**/*.jsx', ['js:jsx']);
-    gulp.watch('src/assets/js/**/*.js', ['js:lib']);
+    gulp.watch('src/assets/res/**/*', res);
+    gulp.watch('src/assets/img/**/*', img);
+    gulp.watch('src/**/*.html', html);
+    gulp.watch('src/assets/scss/**/*.scss', css);
+    gulp.watch('src/app/**/*.{js,jsx}', js);
+}
 
-});
+/*----------  PUBLIC TASKS  ----------*/
 
-/*----------  DEFAULT  ----------*/
+const build = gulp.series(clean, gulp.parallel(res, img, html, css, js));
 
-// Default Task
-gulp.task('default', function() {
-    runSequence('clean', 'res', 'img', 'html', 'css', 'js', 'watch');
-});
+exports.clean = clean;
+exports.build = build;
+exports.serve = gulp.series(build, serve);
+exports.default = exports.serve;

@@ -1,0 +1,38 @@
+{
+    "bungalow": {
+        "name": "Bungalow",
+        "desc": "A laid-back seaside design, hand-drawn in pencil and inked for the summer drop.",
+        "price": 25,
+        "url": "./assets/res/sketches/bungalow.svg"
+    },
+    "mountains": {
+        "name": "Mountains",
+        "desc": "Inspired by long weekends in the hills. Minimalist line-work on a soft-cotton tee.",
+        "price": 28,
+        "url": "./assets/res/sketches/mountains.svg"
+    },
+    "wave": {
+        "name": "Wave",
+        "desc": "A single continuous wave in black ink. Unisex cut, relaxed fit.",
+        "price": 25,
+        "url": "./assets/res/sketches/wave.svg"
+    },
+    "sunburst": {
+        "name": "Sunburst",
+        "desc": "Geometric sun rays for long afternoons. Printed on 100% organic cotton.",
+        "price": 30,
+        "url": "./assets/res/sketches/sunburst.svg"
+    },
+    "compass": {
+        "name": "Compass",
+        "desc": "For the perpetually lost and found. Hand-sketched compass rose, centered.",
+        "price": 27,
+        "url": "./assets/res/sketches/compass.svg"
+    },
+    "feather": {
+        "name": "Feather",
+        "desc": "A single feather falling across the chest. Light, quiet, unfussy.",
+        "price": 26,
+        "url": "./assets/res/sketches/feather.svg"
+    }
+}

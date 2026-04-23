@@ -1,0 +1,23 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_FLAGS = "--legacy-peer-deps"
+  NODE_ENV = "production"
+
+# Preserve the original /savetoken endpoint name by rewriting it to the
+# equivalent Netlify Function. This keeps the client-side code identical
+# to the 2016 implementation.
+[[redirects]]
+  from = "/savetoken"
+  to = "/.netlify/functions/savetoken"
+  status = 200
+
+# SPA fallback for react-router browserHistory
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

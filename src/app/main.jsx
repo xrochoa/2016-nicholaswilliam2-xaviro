@@ -1,4 +1,8 @@
-import { Router, Route, IndexRoute, Link, browserHistory, IndexRedirect } from 'react-router';
+// Must be first: exposes React / ReactDOM as globals for the component files
+// that still use the 2016-style implicit `React.Component` reference.
+import './react-globals';
+
+import { Router, Route, IndexRoute, browserHistory, IndexRedirect } from 'react-router';
 
 //Core
 import { Nav } from './core/nav.component';

@@ -8,10 +8,8 @@ export class Shirts extends React.Component {
     }
 
     componentWillMount() {
-        fetch('https://nicholaswilliamapi.firebaseio.com/shirts.json')
-            .then((response) => {
-                return response.json();
-            })
+        fetch('./assets/res/shirts.json')
+            .then((response) => response.json())
             .then((shirts) => {
                 let shirtsArray = [];
                 for (let key in shirts) {
@@ -21,8 +19,8 @@ export class Shirts extends React.Component {
                 }
                 this.setState({ shirts: shirtsArray });
             })
-            .catch(function(err) {
-                console.log('There was a problen accessing the shirts API: ' + err.message);
+            .catch((err) => {
+                console.log('There was a problem loading the shirts catalog: ' + err.message);
             });
     }
 
